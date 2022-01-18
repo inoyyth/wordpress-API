@@ -17,6 +17,16 @@ function register_post_fields() {
     ) );
 }
 
+register_rest_field( 'user', 'user_email',
+    array(
+        'get_callback'    => function ( $user ) {
+            return $user['email'];
+        },
+        'update_callback' => null,
+        'schema'          => null,
+    )
+);
+
 //Get post views
 function get_post_views($post_obj) {
     $post_id = $post_obj['id'];

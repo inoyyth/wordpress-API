@@ -138,7 +138,6 @@ class Jwt_Auth_Public
         $issuedAt = time();
         $notBefore = apply_filters('jwt_auth_not_before', $issuedAt, $issuedAt);
         $expire = apply_filters('jwt_auth_expire', $issuedAt + (DAY_IN_SECONDS * 7), $issuedAt);
-
         $token = array(
             'iss' => get_bloginfo('url'),
             'iat' => $issuedAt,
@@ -147,6 +146,9 @@ class Jwt_Auth_Public
             'data' => array(
                 'user' => array(
                     'id' => $user->data->ID,
+                    'email' => $user->data->user_email,
+                    'user_registered' => $user->data->user_registered,
+                    'name' => $user->data->display_name
                 ),
             ),
         );
@@ -188,16 +190,17 @@ class Jwt_Auth_Public
         if (!$valid_api_uri) {
             return $user;
         }
-
+        
         /*
          * if the request URI is for validate the token don't do anything,
          * this avoid double calls to the validate_token function.
          */
-        $validate_uri = strpos($_SERVER['REQUEST_URI'], 'token/validate');
+        $validate_uri = strpos($_SERVER['REQUEST_URI'], 'token/validate') || 
+                        strpos($_SERVER['REQUEST_URI'], 'users');
         if ($validate_uri > 0) {
             return $user;
         }
-
+        
         $token = $this->validate_token(false);
 
         if (is_wp_error($token)) {
