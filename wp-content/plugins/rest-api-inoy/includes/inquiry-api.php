@@ -31,5 +31,6 @@ add_action( 'rest_api_init', function () {
         register_rest_route( REST_API_INOY_ROUTE, '/inquiry', array(
         'methods' => 'POST',
         'callback' => 'save_inquiry',
+        'permission_callback' => '__return_true'
     ) );
 } );

@@ -1,4 +1,4 @@
-FROM wordpress:5.1.1-php7.3-apache
+FROM wordpress:5.8.1-php7.3-apache
 
 COPY wp-config.php .htaccess /var/www/html/
 

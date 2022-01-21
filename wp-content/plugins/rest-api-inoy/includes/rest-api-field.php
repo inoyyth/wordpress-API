@@ -20,7 +20,8 @@ function register_post_fields() {
 register_rest_field( 'user', 'user_email',
     array(
         'get_callback'    => function ( $user ) {
-            return $user['email'];
+            $account = get_user_by('id', $user['id']);
+            return $account->data->user_email;
         },
         'update_callback' => null,
         'schema'          => null,

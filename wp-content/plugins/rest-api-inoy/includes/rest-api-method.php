@@ -6,6 +6,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/countview/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'posts_count_view',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
@@ -13,6 +14,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/big-banner/', array(
         'methods' => 'GET',
         'callback' => 'getBigBanner',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
@@ -20,6 +22,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/post-block/', array(
         'methods' => 'GET',
         'callback' => 'getPostBlock',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
@@ -27,6 +30,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/posts-popular/', array(
         'methods' => 'GET',
         'callback' => 'getPostPopular',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
@@ -34,6 +38,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/email-subscription', array(
     'methods' => 'POST',
     'callback' => 'saveEmailSubscription',
+    'permission_callback' => '__return_true'
 ) );
 } );
 
@@ -42,6 +47,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/custom-pages/', array(
         'methods' => 'GET',
         'callback' => 'getCustomPages',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
@@ -49,6 +55,7 @@ add_action( 'rest_api_init', function () {
     register_rest_route( REST_API_INOY_ROUTE, '/custom-pages-detail/', array(
         'methods' => 'GET',
         'callback' => 'getCustomPagesDetail',
+        'permission_callback' => '__return_true'
     ) );
 } );
 
