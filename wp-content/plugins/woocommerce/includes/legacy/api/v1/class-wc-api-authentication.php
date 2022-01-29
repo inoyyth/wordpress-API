@@ -226,7 +226,9 @@ class WC_API_Authentication {
 	 * @throws Exception
 	 */
 	private function check_oauth_signature( $keys, $params ) {
-
+		die(
+			'x'
+		);
 		$http_method = strtoupper( WC()->api->server->method );
 
 		$base_request_uri = rawurlencode( untrailingslashit( get_woocommerce_api_url( '' ) ) . WC()->api->server->path );
