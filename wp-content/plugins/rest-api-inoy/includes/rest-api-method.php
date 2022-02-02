@@ -59,6 +59,14 @@ add_action( 'rest_api_init', function () {
     ) );
 } );
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( REST_API_INOY_ROUTE, '/profile-picture/(?P<id>\d+)', array(
+    'methods' => 'PUT',
+    'callback' => 'update_profile_picture',
+    'permission_callback' => '__return_true'
+    ));
+});
+
 function posts_count_view( $data ) : \WP_REST_Response {
     $post = get_post( $data['id'] );
 
@@ -184,23 +192,6 @@ function saveEmailSubscription(WP_REST_Request $request)  {
 }
 
 function getCustomPages(WP_REST_Request $request) {
-    // try {
-    //     $jwt = new Jwt_Auth_Public('jwt', 'v1');
-    //     $user = $jwt->validate_token(true);
-    //     if (isset($user->errors)) {
-    //     $error = array(
-    //             'jwt_auth_bad_request',
-    //             'User ID not found in the token',
-    //             array(
-    //                 'status' => 403,
-    //             )
-    //         );
-
-    //         return new WP_REST_Response($error, 403);
-    //     } 
-    // } catch(Exception $e) {
-    //     return new WP_REST_Response($e, 500);
-    // }
     $params = $request->get_params();
     $page_type =  isset($params['page_type']) ? $params['page_type'] : 'page';
     $per_page =  isset($params['per_page']) ? $params['per_page'] : 10;
@@ -253,4 +244,44 @@ function getCustomPagesDetail(WP_REST_Request $request) {
     }
 
     return new WP_REST_Response($response, 200);
+}
+
+function update_profile_picture($request_data) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    
+    $params = $request_data->get_params();
+    $body = $request_data->get_json_params();
+    $image = $body['image_url'];
+    $user_id = $params['id'];
+    $result = array();
+   
+    $data = array(
+        'full' => $image,
+        '500' => str_replace('/upload/', '/upload/c_scale,h_500,w_500/', $image),
+        '192' => str_replace('/upload/', '/upload/c_scale,h_192,w_192/', $image),
+        '96' => str_replace('/upload/', '/upload/c_scale,h_96,w_96/', $image),
+        '250' => str_replace('/upload/', '/upload/c_scale,h_250,w_250/', $image),
+        '24' => str_replace('/upload/', '/upload/c_scale,h_24,w_24/', $image),
+        '48' => str_replace('/upload/', '/upload/c_scale,h_48,w_48/', $image),
+    );
+ 
+    $update = $wpdb->update(
+        $table, 
+        array('meta_value'=>serialize($data)), 
+        array('user_id' => $user_id, 'meta_key' => 'wp_user_avatars')
+    );
+
+    if ($update) {
+        $result = array('status' => 200);
+    } else {
+        $result = array('status' => 500);
+    }
+
+    return new WP_REST_Response($result, 200);
+}
+
+function arraySliceInclude($data, $position, $inserted) {
+    array_splice( $data, $position, 0, $inserted );
+    return $data;
 }
