@@ -265,7 +265,7 @@ function update_profile_picture($request_data) {
         '24' => str_replace('/upload/', '/upload/c_scale,h_24,w_24/', $image),
         '48' => str_replace('/upload/', '/upload/c_scale,h_48,w_48/', $image),
     );
- 
+    
     $update = $wpdb->update(
         $table, 
         array('meta_value'=>serialize($data)), 
@@ -273,7 +273,7 @@ function update_profile_picture($request_data) {
     );
 
     if ($update) {
-        $result = array('status' => 200);
+        $result = array('status' => 200, 'data' => str_replace('/upload/', '/upload/c_scale,h_96,w_96/', $image));
     } else {
         $result = array('status' => 500);
     }

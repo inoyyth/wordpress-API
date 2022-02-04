@@ -28,6 +28,30 @@ register_rest_field( 'user', 'user_email',
     )
 );
 
+register_rest_field( 'user', 'birth_date',
+    array(
+        'get_callback'    => 'getUserBirthDate',
+        'update_callback' => 'setUserBirthDate',
+        'schema' => array(
+            'description' => 'The birth date of the user.',
+            'type' => 'string',
+            'context' => array('view', 'edit')
+        )
+    )
+);
+
+register_rest_field( 'user', 'phone_number',
+    array(
+        'get_callback'    => 'getUserPhoneNumber',
+        'update_callback' => 'setUserPhoneNumber',
+        'schema' => array(
+            'description' => 'The phone number of the user.',
+            'type' => 'string',
+            'context' => array('view', 'edit')
+        )
+    )
+);
+
 //Get post views
 function get_post_views($post_obj) {
     $post_id = $post_obj['id'];
@@ -47,6 +71,47 @@ function update_post_views( $value, $post, $key ) {
     }
 
     return true;
+}
+
+function getUserBirthDate($user, $field_name, $request) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    $id = $user['id'];
+    $user_birthdate = $wpdb->get_var( "SELECT meta_value FROM $table WHERE user_id = $id AND meta_key = '$field_name'" );
+    return date('Y-m-d', strtotime($user_birthdate));
+}
+
+function setUserBirthDate($value, $user, $field_name) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    $birt_hdate = str_replace('-', '', $value);
+    $data_update = array('meta_value' => $birt_hdate);
+    $data_where = array('user_id' => $user->ID, 'meta_key' => $field_name);
+    $query = $wpdb->update($table, $data_update, $data_where);
+    if ($query) {
+        return true;
+    }
+    return false;
+}
+
+function getUserPhoneNumber($user, $field_name, $request) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    $id = $user['id'];
+    $value = $wpdb->get_var( "SELECT meta_value FROM $table WHERE user_id = $id AND meta_key = '$field_name'" );
+    return $value;
+}
+
+function setUserPhoneNumber($value, $user, $field_name) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    $data_update = array('meta_value' => $value);
+    $data_where = array('user_id' => $user->ID, 'meta_key' => $field_name);
+    $query = $wpdb->update($table, $data_update, $data_where);
+    if ($query) {
+        return true;
+    }
+    return false;
 }
 
 //Register Post Featured Image
