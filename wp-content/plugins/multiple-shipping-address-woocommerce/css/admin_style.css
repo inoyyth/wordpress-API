@@ -1,0 +1,207 @@
+
+img.OCWMA_rating_div {
+    width: 100px;
+    vertical-align: middle;
+}
+.ocwma_cover_div {
+border: 1px solid #ccc;
+margin-bottom: 10px;
+padding: 16px;
+}
+
+table.ocwma_data_table {
+display: inline-block;
+padding: 0px 10px;
+}
+.ocwma_data_table tr th, .ocwma_data_table tr td{
+text-align: left;
+width: auto;
+}
+.ocwma_data_table tr{
+line-height: 51px;
+}
+.ocwma_data_table tr th{
+min-width: 250px;
+}
+.ocwma_cover_div h2 {
+    background-color: #2271b1;
+    padding: 10px;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 32px;
+}
+.ocwma_data_table strong {
+vertical-align: middle;
+}
+.ocwma_cover_div tr {
+    line-height: 51px;
+}
+.ocwma_data_table input[type="color"]{
+	width:52%;
+}
+.ocwma_pro_link {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+
+/*Billing address popup css*/ 
+div#ocwma_billing_popup_admin {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgb(0 0 0 / 52%);
+}
+.ocwma_modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 5px;
+    padding: 37px 20px 80px 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+span.ocwma_close {
+    font-size: 23px;
+    font-weight: bold;
+    position: absolute;
+    right: 2%;
+    top: 1%;
+    height: 25px;
+    line-height: 26px;
+    width: 25px;
+    vertical-align: middle;
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+    z-index: 9999999;
+    border-radius: 50%;
+    font-family: arial;
+}
+.ocwma_billing_popup_body_admin {
+    overflow: hidden;
+    position: relative;
+}
+span.ocwma_close:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*Shipping address popup css*/
+div#ocwma_shipping_popup_admin {
+    display: none;
+    position: fixed;
+    z-index: 999999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgb(0 0 0 / 52%);
+}
+.ocwma_modal-content_ship {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 5px;
+    padding: 37px 20px 80px 20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+.ocwma_closeship {
+    font-size: 23px;
+    font-weight: bold;
+    position: absolute;
+    right: 2%;
+    top: 1%;
+    height: 25px;
+    line-height: 26px;
+    width: 25px;
+    vertical-align: middle;
+    background-color: #000;
+    text-align: center;
+    color: #fff;
+    z-index: 9999999;
+    border-radius: 50%;
+    font-family: arial;
+}
+.ocwma_shipping_popup_body_admin {
+    overflow: hidden;
+    position: relative;
+}
+span.ocwma_closeship:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*User page Address*/
+.bil_ship_address_user {
+    padding: 20px;
+    border: 1px solid #adadad;
+    margin: 10px 0;
+}
+.bil_ship_address_user_inner {
+    display: inline-block;
+    width: 100%;
+}
+.billing_address_main_section {
+    display: inline-block;
+    width: 50%;
+    float: left;
+}
+.shipping_address_main_section {
+    display: inline-block;
+    width: 50%;
+}
+.billing_address,.shipping_address {
+    display: inline-block;
+    width: 28%;
+    padding: 10px;
+    background-color: #fff;
+    margin: 0 10px 10px 0;
+    border: 1px solid #ccc;
+}
+button.form_option_edit_admin,button.form_option_ship_edit_admin {
+    background-color: #000;
+    cursor: pointer;
+    color: #fff;
+}
+span.delete_bill_address,span.delete_ship_address {
+    float: right;
+}
+.billing_address_main_section_inner {
+    padding-right: 10px;
+    border-right: 1px solid #929292;
+}
+.shipping_address_main_section_inner {
+    padding-left: 10px;
+}
+
+.ocwqv_loading_admin img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999999999;
+}
+.ocma_loading_ship img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999999999;
+}

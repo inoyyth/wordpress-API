@@ -67,6 +67,14 @@ add_action( 'rest_api_init', function () {
     ));
 });
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( REST_API_INOY_ROUTE, '/set-default-address/(?P<user_id>\d+)', array(
+    'methods' => 'PUT',
+    'callback' => 'update_default_address',
+    'permission_callback' => '__return_true'
+    ));
+});
+
 function posts_count_view( $data ) : \WP_REST_Response {
     $post = get_post( $data['id'] );
 
@@ -284,4 +292,17 @@ function update_profile_picture($request_data) {
 function arraySliceInclude($data, $position, $inserted) {
     array_splice( $data, $position, 0, $inserted );
     return $data;
+}
+
+function update_default_address(WP_REST_Request $request) {
+    global $wpdb;
+    $table = $wpdb->prefix . 'usermeta';
+    $params = $request->get_json_params();
+    foreach($params as $k=>$v) {
+        $data_update = array('meta_value' => $v);
+        $data_where = array('user_id' => $request['user_id'], 'meta_key' => $k);
+        $query = $wpdb->update($table, $data_update, $data_where);
+    }
+    
+    return new WP_REST_Response(['message' => 'success'], 200);
 }
