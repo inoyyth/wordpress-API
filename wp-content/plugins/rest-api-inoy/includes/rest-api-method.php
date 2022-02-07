@@ -75,6 +75,30 @@ add_action( 'rest_api_init', function () {
     ));
 });
 
+add_action( 'rest_api_init', function () {
+    register_rest_route( REST_API_INOY_ROUTE, '/province/', array(
+    'methods' => 'GET',
+    'callback' => 'get_province',
+    'permission_callback' => '__return_true'
+    ));
+});
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( REST_API_INOY_ROUTE, '/city/(?P<province_id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_city',
+    'permission_callback' => '__return_true'
+    ));
+});
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( REST_API_INOY_ROUTE, '/district/(?P<city_id>[\d\D][\w\W]+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_district',
+    'permission_callback' => '__return_true'
+    ));
+});
+
 function posts_count_view( $data ) : \WP_REST_Response {
     $post = get_post( $data['id'] );
 
@@ -305,4 +329,33 @@ function update_default_address(WP_REST_Request $request) {
     }
     
     return new WP_REST_Response(['message' => 'success'], 200);
+}
+
+function get_province() {
+    global $wpdb;
+    $table = $wpdb->prefix . 'wilayah_2020';
+    $query = $wpdb->get_results("SELECT kode,nama FROM {$table} WHERE CHAR_LENGTH(kode)=2 ORDER BY nama ASC");
+    $result = array();
+
+    return new WP_REST_Response(array('code'=>200, 'data' => $query), 200);
+}
+
+function get_city(WP_REST_Request $request) {
+    global $wpdb;
+    $province_id = $request['province_id'];
+    $table = $wpdb->prefix . 'wilayah_2020';
+    $query = $wpdb->get_results("SELECT kode,nama FROM {$table} WHERE LEFT(kode,2)={$province_id} AND CHAR_LENGTH(kode)=5 ORDER BY nama ASC");
+    $result = array();
+    
+    return new WP_REST_Response(array('code'=>200, 'data' => $query), 200);
+}
+
+function get_district(WP_REST_Request $request) {
+    global $wpdb;
+    $city_id = $request['city_id'];
+    $table = $wpdb->prefix . 'wilayah_2020';
+    $query = $wpdb->get_results("SELECT kode,nama FROM {$table} WHERE LEFT(kode,5)={$city_id} AND CHAR_LENGTH(kode)=13 ORDER BY nama");
+    $result = array();
+    
+    return new WP_REST_Response(array('code'=>200, 'data' => $query), 200);
 }
